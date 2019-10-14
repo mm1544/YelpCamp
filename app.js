@@ -83,8 +83,8 @@ app.use(session({
 	secret: "daug pinigu turesiu...",
 	store: new MongoStore({
 		url: "mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority",
-      	autoRemove: 'interval',
-      	autoRemoveInterval: 10 // In minutes. Default
+      	autoRemove: 'native',
+      	//autoRemoveInterval: 10 // In minutes. Default
 	}),
 	resave: false,
 	saveUninitialized: false
@@ -127,5 +127,5 @@ app.use("/campgrounds/:id/comments", commentRoutes);
 // });
 
 
-// for Heroku
+// // for Heroku
 app.listen(process.env.PORT, process.env.IP);
