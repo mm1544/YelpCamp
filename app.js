@@ -21,6 +21,15 @@ var commentRoutes 		= require("./routes/comments"),
 	campgroundRoutes 	= require("./routes/campgrounds"),
 	indexRoutes			= require("./routes/index");
 
+//?
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+	
+app.use(session({
+		secret: 'foo',
+		store: new MongoStore(options)
+	}));
+
 // executing seeding procedure each time we re-start the server
  // seedDB(); // seed the database
 
