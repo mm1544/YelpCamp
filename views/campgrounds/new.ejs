@@ -1,0 +1,58 @@
+<%include ../partials/header%>
+<div class="container">
+	
+	<!--Will use a grid system for formating. Will use css and write our own style on top of Bootstrap to format	 -->
+	<div class="row">
+
+		<h1 style="text-align: center;">
+			Create A New Campground
+		</h1>
+		
+		<!--Inline custom styling =>bad practice... 		 -->
+		<div style="width:30%; margin: 25px auto">
+		<!--CENTERING: "margin: 0 auto"=> 0 on top and bottom, and auto on left ant right -->
+			
+		
+
+			<form action="/campgrounds" method="POST">
+				<!-- bootstrap class: class="form-control"	 -->
+				<div class="form-group"> <!-- for a spacing between elements -->
+					
+					<input class="form-control" type="text" name="name" placeholder="name">
+					
+				</div>
+				<div class="form-group">
+					<input class="form-control" type="text" name="image" placeholder="image url">
+				</div>
+				<div class="form-group">
+					<input class="form-control" type="text" name="description" placeholder="description">
+				</div>
+				<div class="form-group"> <!-- for a spacing between elements -->
+					<input class="form-control" type="number" name="price" placeholder="price" min="1" step="1">
+				</div>
+				
+				
+				<div class="form-group">
+					
+				
+				
+				<!--bootstrap class: class="btn btn-lg btn-default";
+
+	"btn-block" => is bult-in bootstrap way to make a !block element!
+	-->
+					<button class="btn btn-lg btn-primary btn-block">
+						Submit
+					</button>
+					
+				</div>	
+			</form>
+			<a href="/campgrounds">Go Back</a>
+		</div>
+
+		
+
+	</div>
+	
+</div>
+
+<%include ../partials/footer%>

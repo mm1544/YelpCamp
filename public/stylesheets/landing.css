@@ -1,0 +1,127 @@
+/*selecting body tag  */
+body {
+  background-color: #000;
+}
+
+#landing-header {
+  z-index: 1; /* in 3d space z describes the dimension
+  that is backwards or forwards to us. If z-index is set
+  to 1, then the content will come on the top of 
+  other objects, whose z-index is smaller*/
+  
+  position: relative; /*In order to be able to use 
+  z-index, we need to change !!position from beying 
+  !!static (static is default position value for all
+  html elements).
+  */
+  
+  text-align: center; /*centering the text and the
+  btton (horizontaly)*/
+  
+  padding-top: 40vh; /*in order to center verticaly
+  on the page, one of the ways is to use 
+  !view height! (vh).  */
+}
+
+
+#landing-header h1 {
+  color: #fff;
+}
+
+.slideshow { 
+  position: fixed;
+  /*will take the entire page*/
+  width: 100%;
+  height: 100%; 
+  /* puting to the left top corner   */
+  top: 0;
+  left: 0;
+  /*ensures that background images are behind 
+  the other content (welcome text and the button)  */
+  z-index: 0;
+  /*removes the bulet points   */
+  list-style: none;
+  /*ensures that there is no margin or padding   */
+  margin: 0;
+  padding: 0;
+}
+
+
+/*styling individual list items  */
+.slideshow li { 
+  width: 100%;
+  height: 100%;
+  /*???    */
+  position: absolute;
+  top: 0;
+  left: 0;
+  /*allowes images to take all the space in the page   */
+  background-size: cover;
+  /*centers images on the page   */
+  background-position: 50% 50%;
+  /*images will not be repeated vertically or 
+  horizontally   */
+  background-repeat: no-repeat;
+  /*...because we want our images to start 
+  fading-out???    */
+  opacity: 0;
+  z-index: 0;
+/*will allow to fade images in and out.
+  "imageAnimation"  - is the name of the animation. It is arbitrary. You can call it whatever you want.*/
+  animation: imageAnimation 50s linear infinite;  
+  /* #  animation will last for 50s;
+     # linear - animation speed is the same from the 
+  begining to the end;
+     # infinite - animation will loop infinitely
+  */
+}
+
+
+.slideshow li:nth-child(1) { 
+  background-image: url(https://images.unsplash.com/photo-1510312305653-8ed496efae75?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80) 
+}
+.slideshow li:nth-child(2) { 
+  background-image: url(https://images.unsplash.com/photo-1471115853179-bb1d604434e0?ixlib=rb-1.2.1&auto=format&fit=crop&w=959&q=80);
+  animation-delay: 10s; 
+}
+.slideshow li:nth-child(3) { 
+  background-image: url(https://images.unsplash.com/photo-1521292270410-a8c4d716d518?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80);
+  animation-delay: 20s; 
+}
+.slideshow li:nth-child(4) { 
+  background-image: url(https://images.unsplash.com/photo-1527095655060-4026c4af2b25?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80);
+  animation-delay: 30s; 
+}
+.slideshow li:nth-child(5) { 
+  background-image: url(https://images.unsplash.com/photo-1517079810336-d39e72287591?ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80);
+  animation-delay: 40s; 
+}
+
+/* ???keyframes selector. 
+# It will indicate what we want to happen at various keyframes of animation 
+# Animation goes from 0% to 100% */
+@keyframes imageAnimation { 
+  0% { 
+    opacity: 0; 
+  /* ???gives more smooth transition     */
+    animation-timing-function: ease-in;
+  }
+/*until 10% we let fade-in to the opacity == 1     */
+  10% {
+    opacity: 1;
+    animation-timing-function: ease-out;
+  }
+/*we leave the opacity ==1 all the way to 20%    */
+  20% {
+    opacity: 1
+  }
+/*we fade-out back to opacity==0 at 30% */
+  30% {
+    opacity: 0
+  }
+}
+
+/* Older browser support - .no-cssanimations class added by modernizr */
+.no-cssanimations .slideshow li {
+	opacity: 1;
+}

@@ -1,0 +1,64 @@
+<!--Why "../"?
+Since index.ejs is in views/campgrounds/, to find header.ejs we need to go one level back from /campgrounds/ -->
+<% include ../partials/header %>
+
+
+<!-- Going to add everything into Bootstrap container.
+It will add some spacing on the sides-->
+
+<div class="container">
+
+	<!-- functionaly "header" tag works like a DIV. Difference is just in semantic meaning... What really matters is a "container"-->
+	<header class="jumbotron">
+		<div class="container">
+			<h1>
+				Welcome To The YelpCamp
+			</h1>
+			<p>
+				View our hand-picked campgrounds
+			</p>
+	<!-- 	Making a button. !!"btn-primary" -- for a color	 -->
+			<p>
+				<a class="btn btn-primary btn-lg" href="/campgrounds/new">Add New Campground</a>
+			</p>
+		</div>	
+	</header>
+
+	
+<!-- creating a grid of objects	 -->
+	<div class="row text-center" style ="display:flex; flex-wrap: wrap;">
+<!-- 	"style ="display:flex; flex-wrap: wrap;"" gives more flexibility and adaptivity to the grid	 -->
+		
+<!-- 	Inside of "row", for each campground we want to make DIV that has a "column" class	 -->
+
+		<% campgrounds.forEach(function(campground){ %>
+
+			<div class="col-md-3 col-sm-6">
+				<!-- There are 12 units. For screen size medium?? we divide screen into 4 chunks, where each chunk takes 3 units. For small, each item takes 6 units...	Extra small !default is to use 12 units for 1 item.			 -->
+				<!-- class="thumbnail", is bootstrap class that helps to make a little card or grid item				 -->
+				<div class="thumbnail">
+					<!-- 	image tag	 -->
+					<img src="<%= campground.image %>">
+					
+					<div class="caption">
+						<h4>
+							<%= campground.name %>
+						</h4>
+					</div>
+					<p>
+						<!-- That is a Bootstrap class: class="btn btn-primary"						 -->
+						<a class="btn btn-primary" href="/campgrounds/<%= campground._id %>">More Info</a>
+<!-- 	"<%= %>" - it is EJS					 -->
+					</p>
+				</div>
+			</div>
+		<% }); %>
+	</div>
+
+	<p>
+		<a href="/">Back To Home Page</a>
+	</p>
+	
+</div>
+
+<% include ../partials/footer %>

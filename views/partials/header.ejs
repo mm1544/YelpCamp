@@ -1,0 +1,60 @@
+<!-- adding upper part of html boiler plate -->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>YelpCamp</title>
+	
+<!-- Bootstrap v3.4.1	 -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	
+	<!--Linking our custom stylesheet 	 -->
+	<link rel="stylesheet" href="/stylesheets/main.css">
+	
+</head>
+<body>
+	
+	<!-- Nav bar. All the files, that will include !header, will have a navbar-->
+	
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/">YelpCamp</a>
+			</div>
+			
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<!-- _<_%_ and _%_>_ are ejs tags!!! 					 -->
+					<% if(!currentUser){ %>
+						<li><a href="/login">Login</a></li>
+						<li><a href="/register">Sign Up</a></li>
+					
+					<% } else { %>
+						<li><a>Logged In as: <strong><%=currentUser.username%></strong></a></li>
+						<li><a href="/logout">Logout</a></li>
+					<% } %>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	
+	<div class="container">
+<!--even there is nothing in error, it can be empty array... 		 -->
+		<% if(error && error.length > 0) { %>
+		<div class="alert alert-danger" role="alert">
+  			<!-- because in app.js: "res.locals.message = req.flash("error");" 		 -->
+			<%= error %>
+		</div>
+		<% } %>
+		<% if(success && success.length > 0) { %>
+		<div class="alert alert-success" role="alert">
+  			<!-- because in app.js: "res.locals.message = req.flash("error");" 		 -->
+			<%= success %>
+		</div>
+		<% } %>
+		
+		
+		
+	</div>
+	
+	

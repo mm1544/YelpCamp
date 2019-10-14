@@ -1,0 +1,55 @@
+<%include ../partials/header%>
+<div class="container">
+	
+	<!--Will use a grid system for formating. Will use css and write our own style on top of Bootstrap to format	 -->
+	<div class="row">
+
+		<h1 style="text-align: center;">
+			Edit <%= campground.name %>
+		</h1>
+		
+		<!--Inline custom styling =>bad practice... 		 -->
+		<div style="width:30%; margin: 25px auto">
+			<!--Adding "?_method=PUT" part because by the convention we have to use PUT request 			 -->
+			<form action="/campgrounds/<%= campground._id %>/?_method=PUT" method="POST">
+				<!-- bootstrap class: class="form-control"	 -->
+				<div class="form-group"> <!-- for a spacing between elements -->
+					
+					<input class="form-control" type="text" name="campground[name]" value="<%= campground.name %>"</inpu>
+					
+				</div>
+				<div class="form-group">
+					<input class="form-control" type="text" name="campground[image]" value="<%= campground.image %>">
+				</div>
+				<div class="form-group">
+					<input class="form-control" type="text" name="campground[description]" value="<%= campground.description %>">
+				</div>
+				<div class="form-group"> <!-- for a spacing between elements -->
+					<input class="form-control" type="number" name="campground[price]" value="<%= campground.price %>" min="1" step="1">
+				</div>
+				
+				
+				<div class="form-group">
+					
+				
+				
+				<!--bootstrap class: class="btn btn-lg btn-default";
+
+	"btn-block" => is bult-in bootstrap way to make a !block element!
+	-->
+					<button class="btn btn-lg btn-primary btn-block">
+						Submit
+					</button>
+					
+				</div>	
+			</form>
+			<a href="/campgrounds">Go Back</a>
+		</div>
+
+		
+
+	</div>
+	
+</div>
+
+<%include ../partials/footer%>
