@@ -48,20 +48,20 @@ app.use(flash()); // messages will be displayed in the header file(header.ejs)
 // }); 
 
 
-mongoose.connect("mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true,
-useUnifiedTopology: true
-});
-
-
-// // coonecting to the database:
-// mongoose.connect('mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority', {
-//     useNewUrlParser: true,
-//     useCreateIndex: true
-// }).then(() => {
-//     console.log('Connected to MongoDB!');
-// }).catch(err => {
-//     console.log('Error: ', err.message);
+// mongoose.connect("mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true,
+// useUnifiedTopology: true
 // });
+
+
+// coonecting to the database:
+mongoose.connect('mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useCreateIndex: true
+}).then(() => {
+    console.log('Connected to MongoDB!');
+}).catch(err => {
+    console.log('Error: ', err.message);
+});
 
 
 
@@ -76,13 +76,12 @@ useUnifiedTopology: true
 
 
 // PASSPORT CONFIGURATION
-const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 // Setting-up Express session
 app.use(session({
 	secret: "daug pinigu turesiu...",
 	store: new MongoStore({
-		//url: 'http://localhost:3000/',
 		url: "mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority",
       	autoRemove: 'interval',
       	autoRemoveInterval: 10 // In minutes. Default
