@@ -21,14 +21,6 @@ var commentRoutes 		= require("./routes/comments"),
 	campgroundRoutes 	= require("./routes/campgrounds"),
 	indexRoutes			= require("./routes/index");
 
-//?
-const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
-	
-app.use(session({
-		secret: 'foo',
-		store: new MongoStore(options)
-	}));
 
 // executing seeding procedure each time we re-start the server
  // seedDB(); // seed the database
@@ -72,11 +64,29 @@ useUnifiedTopology: true
 // });
 
 
-// PASSPORT CONFIGURATION
 
+// // Example code
+// const session = require('express-session');
+// const MongoStore = require('connect-mongo')(session);
+	
+// app.use(session({
+// 		secret: 'foo',
+// 		store: new MongoStore(options)
+// 	}));
+
+
+// PASSPORT CONFIGURATION
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 // Setting-up Express session
-app.use(require("express-session")({
+app.use(session({
 	secret: "daug pinigu turesiu...",
+	store: new MongoStore({
+		//url: 'http://localhost:3000/',
+		url: "mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority",
+      	autoRemove: 'interval',
+      	autoRemoveInterval: 10 // In minutes. Default
+	}),
 	resave: false,
 	saveUninitialized: false
 }));
@@ -110,7 +120,9 @@ app.use("/", indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 
-// for local testing
+
+
+// // for local testing
 // app.listen(8080, function(){
 // 	console.log("The YelpCamp Server Has Started");
 // });
