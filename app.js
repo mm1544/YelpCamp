@@ -43,10 +43,20 @@ app.use(flash()); // messages will be displayed in the header file(header.ejs)
 //connecting mongoose (DB)
 // If DB does not exist, it will be created
 
-mongoose.connect("mongodb://localhost:27017/yelp_camp_v12_2", { useNewUrlParser: true,
-useUnifiedTopology: true
-}); 
+// mongoose.connect("mongodb://localhost:27017/yelp_camp_v12_2", { useNewUrlParser: true,
+// useUnifiedTopology: true
+// }); 
 
+
+// coonecting to the database:
+mongoose.connect('mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useCreateIndex: true
+}).then(() => {
+    console.log('Connected to MongoDB!');
+}).catch(err => {
+    console.log('Error: ', err.message);
+});
 
 
 // PASSPORT CONFIGURATION
@@ -88,6 +98,6 @@ app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 
 
-app.listen(3000, function(){
+app.listen(8080, function(){
 	console.log("The YelpCamp Server Has Started");
 });
