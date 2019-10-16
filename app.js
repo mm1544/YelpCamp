@@ -12,6 +12,7 @@ var express = require("express"),
 	passport = require("passport"),
 	LocalStrategy = require("passport-local"),
 	methodOverride = require("method-override"),
+	express_session = require('express-session'),
 	Comment = require("./models/comment"),
 	Campground = require("./models/campground"),
 	User = require("./models/user"),
@@ -41,13 +42,12 @@ app.use(flash()); // messages will be displayed in the header file(header.ejs)
 
 
 
-//connecting to local mongoose DB
-
+// //connecting to local mongoose DB
 // mongoose.connect("mongodb://localhost:27017/yelp_camp_v12_2", { useNewUrlParser: true,
 // useUnifiedTopology: true
 // }); 
 
-
+// // connecting to MongoDB
 // mongoose.connect("mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true,
 // useUnifiedTopology: true
 // });
@@ -56,7 +56,8 @@ app.use(flash()); // messages will be displayed in the header file(header.ejs)
 // coonecting to the database:
 mongoose.connect('mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority', {
     useNewUrlParser: true,
-    useCreateIndex: true
+	//useCreateIndex: true,
+	useUnifiedTopology: true
 }).then(() => {
     console.log('Connected to MongoDB!');
 }).catch(err => {
@@ -76,10 +77,11 @@ mongoose.connect('mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.n
 
 
 // PASSPORT CONFIGURATION
-var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
+
+// v2.
+var MongoStore = require('connect-mongo')(express_session);
 // Setting-up Express session
-app.use(session({
+app.use(express_session({
 	secret: "daug pinigu turesiu...",
 	store: new MongoStore({
 		url: "mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority",
@@ -89,6 +91,15 @@ app.use(session({
 	resave: false,
 	saveUninitialized: false
 }));
+
+// // v1.
+// // Setting-up Express session
+// app.use(express_session({
+// 	secret: "daug pinigu turesiu...",
+// 	resave: false,
+// 	saveUninitialized: false
+// }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 // passing method User.authenticate(), which comes with
@@ -127,5 +138,5 @@ app.use("/campgrounds/:id/comments", commentRoutes);
 // });
 
 
-// // for Heroku
+// for Heroku
 app.listen(process.env.PORT, process.env.IP);
