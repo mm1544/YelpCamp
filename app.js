@@ -54,7 +54,7 @@ app.use(flash()); // messages will be displayed in the header file(header.ejs)
 
 
 // coonecting to the database:
-mongoose.connect('mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority', {
+mongoose.connect(process.env.DATABASEURL, {
     useNewUrlParser: true,
 	//useCreateIndex: true,
 	useUnifiedTopology: true
@@ -138,4 +138,6 @@ app.use("/campgrounds/:id/comments", commentRoutes);
 // });
 
 // for Heroku
-app.listen(process.env.PORT, process.env.IP);
+// "process.env.PORT, process.env.IP"  are environment variables
+// they refer to the environment where this code is beying runed
+app.listen(process.env.PORT, process.env.IP); 
