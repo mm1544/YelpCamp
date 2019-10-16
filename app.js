@@ -22,6 +22,11 @@ var commentRoutes 		= require("./routes/comments"),
 	campgroundRoutes 	= require("./routes/campgrounds"),
 	indexRoutes			= require("./routes/index");
 
+// If "process.env.DATABASEURL" is 
+// corupt, then we will use a !!backup.
+// "process.env.DATABASEURL" is environmental variable equal to 
+// "mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority"
+var url = process.env.DATABASEURL || "mongodb://localhost:27017/yelp_camp_v12_2";
 
 // executing seeding procedure each time we re-start the server
  // seedDB(); // seed the database
@@ -54,7 +59,7 @@ app.use(flash()); // messages will be displayed in the header file(header.ejs)
 
 
 // coonecting to the database:
-mongoose.connect(process.env.DATABASEURL, {
+mongoose.connect(url, {
     useNewUrlParser: true,
 	//useCreateIndex: true,
 	useUnifiedTopology: true
