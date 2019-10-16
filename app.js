@@ -137,6 +137,5 @@ app.use("/campgrounds/:id/comments", commentRoutes);
 // 	console.log("The YelpCamp Server Has Started");
 // });
 
-
 // for Heroku
 app.listen(process.env.PORT, process.env.IP);
