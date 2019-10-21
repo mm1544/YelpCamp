@@ -20,9 +20,14 @@ It will add some spacing on the sides-->
 	<!-- 	Making a button. !!"btn-primary" -- for a color	 -->
 			<p>
 				<a class="btn btn-primary btn-lg" href="/campgrounds/new">Add New Campground</a>
-			</p>
+			</p>			
+
 		</div>	
 	</header>
+
+	<% if(campgrounds.length < 1) { %>
+		<h1 class="text-center">No results found!</h1>
+	<%}%>
 
 	
 <!-- creating a grid of objects	 -->

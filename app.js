@@ -22,11 +22,15 @@ var commentRoutes 		= require("./routes/comments"),
 	campgroundRoutes 	= require("./routes/campgrounds"),
 	indexRoutes			= require("./routes/index");
 
+// For Heroku
 // If "process.env.DATABASEURL" is 
 // corupt, then we will use a !!backup.
 // "process.env.DATABASEURL" is environmental variable equal to 
 // "mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority"
 var url = process.env.DATABASEURL || "mongodb://localhost:27017/yelp_camp_v12_2";
+
+// For local testing
+// var url = "mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority";
 
 // executing seeding procedure each time we re-start the server
  // seedDB(); // seed the database
@@ -47,7 +51,7 @@ app.use(flash()); // messages will be displayed in the header file(header.ejs)
 
 
 
-// //connecting to local mongoose DB
+// //connecting to local mongoose DB on GoormIDE
 // mongoose.connect("mongodb://localhost:27017/yelp_camp_v12_2", { useNewUrlParser: true,
 // useUnifiedTopology: true
 // }); 
@@ -61,7 +65,6 @@ app.use(flash()); // messages will be displayed in the header file(header.ejs)
 // coonecting to the database:
 mongoose.connect(url, {
     useNewUrlParser: true,
-	//useCreateIndex: true,
 	useUnifiedTopology: true
 }).then(() => {
     console.log('Connected to MongoDB!');
@@ -70,20 +73,7 @@ mongoose.connect(url, {
 });
 
 
-
-// // Example code
-// const session = require('express-session');
-// const MongoStore = require('connect-mongo')(session);
-	
-// app.use(session({
-// 		secret: 'foo',
-// 		store: new MongoStore(options)
-// 	}));
-
-
 // PASSPORT CONFIGURATION
-
-// v2.
 var MongoStore = require('connect-mongo')(express_session);
 // Setting-up Express session
 app.use(express_session({
@@ -96,14 +86,6 @@ app.use(express_session({
 	resave: false,
 	saveUninitialized: false
 }));
-
-// // v1.
-// // Setting-up Express session
-// app.use(express_session({
-// 	secret: "daug pinigu turesiu...",
-// 	resave: false,
-// 	saveUninitialized: false
-// }));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -141,6 +123,8 @@ app.use("/campgrounds/:id/comments", commentRoutes);
 // app.listen(8080, function(){
 // 	console.log("The YelpCamp Server Has Started");
 // });
+
+
 
 // for Heroku
 // "process.env.PORT, process.env.IP"  are environment variables

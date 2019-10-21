@@ -6,28 +6,44 @@ var router = express.Router();
 var Campground = require("../models/campground");
 // if we "require" a directory(not a file) it will outomaticaly look for "index.js"
 var middleware = require("../middleware");
+var ErrorStackParser = require("error-stack-parser");
 
 
 // INDEX - will show all the camp-grounds that we have
 router.get("/", function(req, res){
+	if(req.query.search){
+		// Will search through all the campgrounds and will return
+		// campgrounds, that match the query string.
 
-	//Get all campgrounds from DB
-	Campground.find({}, function(err, campgroundsFromDB){
-		if(err){
-			console.log(err);
-		} else {
-			// 	"req.user" contains username and ID of 
-			// CURRENTLY LOGGED USER!!!! So we are
-			// !passing! info about the user to the
-			// templet 			
-			res.render("campgrounds/index", {campgrounds: campgroundsFromDB});
-		}
-	});
-	
-	// // 	rendering the template, pass all the data 
-	// // that is needed..
-	// res.render("campgrounds", {campgrounds: campgrounds});
-	
+		// regular expression
+		const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+		// searching through the campground names
+		Campground.find({name: regex}, function(err, campgroundsFromDB){
+			if(err){
+				console.log(err);
+			} else {
+				// 	"req.user" contains username and ID of 
+				// CURRENTLY LOGGED USER!!!! So we are
+				// !passing! info about the user to the
+				// templet 			
+				res.render("campgrounds/index", {campgrounds: campgroundsFromDB});
+			}
+		});
+
+	} else {
+		//Get all campgrounds from DB
+		Campground.find({}, function(err, campgroundsFromDB){
+			if(err){
+				console.log(err);
+			} else {
+				// 	"req.user" contains username and ID of 
+				// CURRENTLY LOGGED USER!!!! So we are
+				// !passing! info about the user to the
+				// templet 			
+				res.render("campgrounds/index", {campgrounds: campgroundsFromDB});
+			}
+		});
+	}
 });
 
 
@@ -154,6 +170,11 @@ router.delete("/:id", middleware.checkCampgroundOwnership, function(req, res){
 		}
 	});
 });
+
+// "fuzzy" search with regular expressions
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 
 // Exporting "router"

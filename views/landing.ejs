@@ -23,8 +23,25 @@
     
     <div id="landing-header">
  		<h1>Welcome to YelpCamp!</h1>
-		<a href="/campgrounds" class="btn btn-lg btn-success">View All Campgrounds</a>
+        <a href="/campgrounds" class="btn btn-lg btn-success">View All Campgrounds</a>
+        <p>
+                <!--after submitting, nputs will be put into query, 
+                    and that will allow us to access input values-->
+                <form action="/campgrounds" method="GET" class="form-inline">
+                    <div class="container-fluid">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <input type="text" name="search" placeholder="Search for campgrounds..." class="form-control">
+                                <input type="submit" value="Search" class="btn btn-default">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </form>
+        </p>
     </div>
+
     
     <ul class="slideshow">
 <!-- 5 list items that correspond to 5 background images 		 -->

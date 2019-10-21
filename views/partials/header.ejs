@@ -24,6 +24,26 @@
 			
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<p>
+							<!--after submitting, nputs will be put into query, 
+								and that will allow us to access input values-->
+							<form action="/campgrounds" method="GET" class="form-inline">
+								<div class="container-fluid">
+									<div class="container-fluid">
+											<div class="form-group">
+													<input type="text" name="search" placeholder="Search for campgrounds..." class="form-control">
+													<input type="submit" value="Search" class="btn btn-default">
+											</div>
+									</div>
+								</div>
+								
+								
+							</form>
+						</p>
+					</li>
+					
+
 					<!-- _<_%_ and _%_>_ are ejs tags!!! 					 -->
 					<% if(!currentUser){ %>
 						<li><a href="/login">Login</a></li>
