@@ -6,8 +6,16 @@ var router = express.Router();
 var Campground = require("../models/campground");
 // if we "require" a directory(not a file) it will outomaticaly look for "index.js"
 var middleware = require("../middleware");
-var ErrorStackParser = require("error-stack-parser");
-
+var NodeGeocoder = require('node-geocoder');
+ 
+var options = {
+  provider: 'google',
+  httpAdapter: 'https',
+  apiKey: process.env.GEOCODER_API_KEY,
+  formatter: null
+};
+ 
+var geocoder = NodeGeocoder(options);
 
 // INDEX - will show all the camp-grounds that we have
 router.get("/", function(req, res){
