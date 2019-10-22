@@ -121,7 +121,7 @@ app.use("/campgrounds/:id/comments", commentRoutes);
 
 
 if(process.env.LOCAL){
-	// for local testing http://localhost:8080
+	// for local testing: http://localhost:8080
 	app.listen(8080, function(){
 		console.log("The YelpCamp Server Has Started");
 	});
