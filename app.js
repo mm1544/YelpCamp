@@ -1,5 +1,4 @@
-//FILE WILL BE REFACTORED LATER TO BRAKE IT INTO SMALLER PEACES
-
+require('dotenv').config();
 //importing express
 var express = require("express"),
 // "app" variable
