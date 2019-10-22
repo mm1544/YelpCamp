@@ -50,7 +50,12 @@
 						<li><a href="/register">Sign Up</a></li>
 					
 					<% } else { %>
-						<li><a>Logged In as: <strong><%=currentUser.username%></strong></a></li>
+						<% if(currentUser.isAdmin) { %>
+							<li><a><strong>ADMIN: <%= currentUser.username %></strong></a></li>
+						<% } else { %>
+							<li><a>Logged In as: <strong><%= currentUser.username %></strong></a></li>
+							<% } %>
+						
 						<li><a href="/logout">Logout</a></li>
 					<% } %>
 				</ul>
@@ -59,7 +64,7 @@
 	</nav>
 	
 	<div class="container">
-<!--even there is nothing in error, it can be empty array... 		 -->
+		<!--even there is nothing in error, it can be empty array... 		 -->
 		<% if(error && error.length > 0) { %>
 		<div class="alert alert-danger" role="alert">
   			<!-- because in app.js: "res.locals.message = req.flash("error");" 		 -->

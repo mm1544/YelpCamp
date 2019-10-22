@@ -24,6 +24,9 @@ router.get("/register", function(req, res){
 // Handle sign-up logic
 router.post("/register", function(req, res){
 	var newUser = new User({username: req.body.username});
+	if(req.body.adminCode === "secret123"){
+		newUser.isAdmin = true;
+	}
 	// SIGN-UP. Handles registration, instead of storing
 	// password it stores hash
 	User.register(newUser, req.body.password, function(err, user){
@@ -59,6 +62,7 @@ router.post("/login", passport.authenticate("local",
 		failureRedirect: "/login"
 	}), function(req, res){
 // 	callback f. doesn't do anything
+		console.log(req.user);
 });
 
 
@@ -66,6 +70,7 @@ router.post("/login", passport.authenticate("local",
 // logout route
 router.get("/logout", function(req, res){
 	req.logout();
+	console.log("After log-out: " + req.user);
 // 	First thing that we are passing is a key, it can be anything..
 	req.flash("success", "Logged you out!");
 	res.redirect("/campgrounds");

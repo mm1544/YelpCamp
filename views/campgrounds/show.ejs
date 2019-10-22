@@ -40,7 +40,7 @@
 <!-- "currentUser && ..." ==> if current user exist && ...
 # If currentUser is undefined or is empty we will not going to check the rest of equation (that is how && works) and will not get an error.
 -->
-					<% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
+					<% if(currentUser && campground.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
 					<a class="btn btn-xs btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
 					
 					<!-- !!!! Need to use a form that sends POST request, that has  "_method=DELETE" in the url... -->
@@ -75,7 +75,7 @@ of them we need to mke a separate row.  -->
 						</p>
 						
 						
-						<% if(currentUser && comment.author.id.equals(currentUser._id)) { %>	
+						<% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>	
 						
 						<a class="btn btn-xs btn-warning" href="/campgrounds/<%=campground._id %>/comments/<%= comment._id %>/edit ">Edit</a>
 						
