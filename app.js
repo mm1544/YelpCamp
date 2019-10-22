@@ -28,8 +28,10 @@ var commentRoutes 		= require("./routes/comments"),
 // "mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority"
 // var url = process.env.DATABASEURL || "mongodb://localhost:27017/yelp_camp_v12_2";
 
+var url = process.env.DATABASEURL || process.env.LOCAL;
+
 // For local testing
-var url = "mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority";
+// var url = "mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority";
 
 // executing seeding procedure each time we re-start the server
  // seedDB(); // seed the database
@@ -118,11 +120,19 @@ app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 
 
+if(process.env.LOCAL){
+	// for local testing http://localhost:8080
+	app.listen(8080, function(){
+		console.log("The YelpCamp Server Has Started");
+	});
+} else {
+	app.listen(process.env.PORT, process.env.IP); 
+}
 
-// for local testing
-app.listen(8080, function(){
-	console.log("The YelpCamp Server Has Started");
-});
+// // for local testing http://localhost:8080
+// app.listen(8080, function(){
+// 	console.log("The YelpCamp Server Has Started");
+// });
 
 
 
