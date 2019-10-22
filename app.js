@@ -27,10 +27,10 @@ var commentRoutes 		= require("./routes/comments"),
 // corupt, then we will use a !!backup.
 // "process.env.DATABASEURL" is environmental variable equal to 
 // "mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority"
-var url = process.env.DATABASEURL || "mongodb://localhost:27017/yelp_camp_v12_2";
+// var url = process.env.DATABASEURL || "mongodb://localhost:27017/yelp_camp_v12_2";
 
 // For local testing
-// var url = "mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority";
+var url = "mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority";
 
 // executing seeding procedure each time we re-start the server
  // seedDB(); // seed the database
@@ -64,7 +64,8 @@ app.use(flash()); // messages will be displayed in the header file(header.ejs)
 
 // coonecting to the database:
 mongoose.connect(url, {
-    useNewUrlParser: true,
+	useNewUrlParser: true,
+	//useCreateIndex: true,
 	useUnifiedTopology: true
 }).then(() => {
     console.log('Connected to MongoDB!');
@@ -80,7 +81,7 @@ app.use(express_session({
 	secret: "daug pinigu turesiu...",
 	store: new MongoStore({
 		url: "mongodb+srv://mm1544:vQlmeCsumXcN1XVg@cluster0-xn0rp.mongodb.net/test?retryWrites=true&w=majority",
-      	autoRemove: 'native',
+      	autoRemove: 'native'
       	//autoRemoveInterval: 10 // In minutes. Default
 	}),
 	resave: false,
@@ -119,14 +120,14 @@ app.use("/campgrounds/:id/comments", commentRoutes);
 
 
 
-// // for local testing
-// app.listen(8080, function(){
-// 	console.log("The YelpCamp Server Has Started");
-// });
+// for local testing
+app.listen(8080, function(){
+	console.log("The YelpCamp Server Has Started");
+});
 
 
 
 // for Heroku
 // "process.env.PORT, process.env.IP"  are environment variables
 // they refer to the environment where this code is beying runed
-app.listen(process.env.PORT, process.env.IP); 
+// app.listen(process.env.PORT, process.env.IP); 
