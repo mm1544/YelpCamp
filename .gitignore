@@ -1,0 +1,4 @@
+# ".env" file will be ignored when pushing to Git
+# This way we are !hiding file with sensitive info
+.env
+/node_modules

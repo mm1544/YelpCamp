@@ -11,6 +11,7 @@ var NodeGeocoder = require('node-geocoder');
 var options = {
   provider: 'google',
   httpAdapter: 'https',
+//   accesses environmental var
   apiKey: process.env.GEOCODER_API_KEY,
   formatter: null
 };
@@ -67,26 +68,40 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 	var author = {
 		username: req.user.username, 
 		id: req.user._id};
-	
-    // need to push an object therefore making new object
-	var newCampground = {name: name, price: price, image: image, description: description, author: author};
-	
-// 	"req.user" contains info about currently logged-in user (where from???. Passport maybe loggs-in the user and adds this info).
-	// console.log(req.user);
-	
-	// Saving to DB
-	Campground.create(newCampground,
-	function(err, newlyCreated){
-	if(err){
-		req.flash("error", err.message);
-		console.log(err);
-	} else {
-		req.flash("success", "Campground created");
-		// console.log(newlyCreated);
-			// 	!redirect! back to campgrounds page (to route 
-			// "router.get("/campgrounds"...")
-		res.redirect("/campgrounds/" + newlyCreated._id); //!!!by default it is redirected as a !GET request!
+
+	// Accesses API and gets Data (coordinates) or Error
+	geocoder.geocode(req.body.location, function (err, data){
+		if(err || !data.length) { // err or no data
+			console.log(err);
+			req.flash('error', 'Invalid address');
+			return res.redirect('back');
 		}
+
+		var lat = data[0].latitude;
+		var lng = data[0].longitude;
+		var location = data[0].formattedAddress;
+
+
+		// need to push an object therefore making new object
+		var newCampground = {name: name, price: price, image: image, description: description, author: author, location: location, lat: lat, lng: lng};
+	
+		// 	"req.user" contains info about currently logged-in user (where from???. Passport maybe loggs-in the user and adds this info).
+		// console.log(req.user);
+		
+		// Saving to DB
+		Campground.create(newCampground,
+		function(err, newlyCreated){
+		if(err){
+			req.flash("error", err.message);
+			console.log(err);
+		} else {
+			req.flash("success", "Campground created");
+			// console.log(newlyCreated);
+				// 	!redirect! back to campgrounds page (to route 
+				// "router.get("/campgrounds"...")
+			res.redirect("/campgrounds"); //!!!by default it is redirected as a !GET request!
+			}
+		});
 	});
 });
 
@@ -150,18 +165,28 @@ router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req, res){
 
 // UPDATE CAMPGROUND ROUTE
 router.put("/:id", middleware.checkCampgroundOwnership, function(req, res){
-// 	Find and update the correct campground
-// 	"req.body.campground" is the data to update with!!
-	Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCampground){
-		if(err){
-			req.flash("error", "Something went wrog");
-			console.log(err);
-			res.redirect("/campgrounds");
-		} else {
-			// 	Redirect elswhere (show page)
-			req.flash("success", "Campground updated successfully");
-			res.redirect("/campgrounds/" + req.params.id);
+	geocoder.geocode(req.body.location, function (err, data) {
+		if (err || !data.length) {
+		  req.flash('error', 'Invalid address');
+		  return res.redirect('back');
 		}
+		req.body.campground.lat = data[0].latitude;
+		req.body.campground.lng = data[0].longitude;
+		req.body.campground.location = data[0].formattedAddress;
+	
+		// 	Find and update the correct campground
+		// 	"req.body.campground" is the data to update with!!
+		Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCampground){
+			if(err){
+				req.flash("error", "Something went wrog");
+				console.log(err);
+				res.redirect("/campgrounds");
+			} else {
+				// 	Redirect elswhere (show page)
+				req.flash("success", "Campground updated successfully");
+				res.redirect("/campgrounds/" + req.params.id);
+			}
+		});
 	});
 });
 
