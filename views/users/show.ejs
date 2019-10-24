@@ -1,0 +1,32 @@
+<% include ../partials/header %>
+
+<div class="row">
+    <div class="col-md-4">
+        <% if(user.avatar || user.firstName || user.email) { %>
+            <div class="thumbnail">
+                <% if(user.firstName && user.lastName) { %>
+                    <h1><%= user.firstName + " " + user.lastName %></h1>
+                <% } %>
+                <% if(user.avatar) { %>
+                    <img src="<%= user.avatar %>" alt="user profile image">
+                    <% } %>
+                <% if(user.email) { %>
+                    <div class="caption"><a href="mailto:<%= user.email %>"><%= user.email %></a></div>
+                <% } %>
+            </div>
+        <% } %>
+    </div>
+    <div class="col-md-8">
+        <!-- <div class="thumbnail">    -->
+                
+        <h2><%= user.username %>'s campgrounds:</h2>
+        <ul>
+            <%campgrounds.forEach(function(campground) { %>
+                <li><a href="/campgrounds/<%= campground.id %>"><%= campground.name %></a></li>
+            <% }); %>
+        </ul>
+        <!-- </div> -->
+    </div>
+</div>
+
+<% include ../partials/footer %>

@@ -34,7 +34,7 @@
 						<%= campground.description %>
 					</p>
 					<p>
-						<em>Submitted By </em><%=campground.author.username %>
+						<em>Submitted By <a href="/users/<%=campground.author.id%>"></em><%=campground.author.username %></a>
 					</p>
 					
 <!-- "currentUser && ..." ==> if current user exist && ...
