@@ -19,45 +19,57 @@
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
+					<!--Making a "hamburger" -->
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-nav-demo" aria-expanded="false">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+					</button>
+
 				<a class="navbar-brand" href="/">YelpCamp</a>
 			</div>
 			
-			<div class="collapse navbar-collapse">
+			
+			<div class="collapse navbar-collapse" id="bs-nav-demo" >
 				<ul class="nav navbar-nav navbar-right">
 					<li>
 						<p>
-							<!--after submitting, nputs will be put into query, 
-								and that will allow us to access input values-->
+							 <!---- after submitting, iputs will be put into query, 
+								and that will allow us to access input values ---->
+
 							<form action="/campgrounds" method="GET" class="form-inline">
 								<div class="container-fluid">
 									<div class="container-fluid">
-											<div class="form-group">
-													<input type="text" name="search" placeholder="Search for campgrounds..." class="form-control">
-													<input type="submit" value="Search" class="btn btn-default">
-											</div>
+										<div class="form-group">
+												<input type="text" name="search" placeholder="Search for campgrounds..." class="form-control">
+											
+												<input type="submit" value="Search" class="btn btn-default">
+										</div>
 									</div>
 								</div>
-								
-								
-							</form>
-						</p>
+							</form> 
+						</p> 
 					</li>
+					<li role="separator" class="divider"></li>
+					<li>
 					
-
-					<!-- _<_%_ and _%_>_ are ejs tags!!! 					 -->
-					<% if(!currentUser){ %>
-						<li><a href="/login">Login</a></li>
-						<li><a href="/register">Sign Up</a></li>
-					
-					<% } else { %>
-						<% if(currentUser.isAdmin) { %>
-							<li><a><strong>ADMIN: <%= currentUser.username %></strong></a></li>
-						<% } else { %>
-							<li><a>Logged In as: <strong><%= currentUser.username %></strong></a></li>
-							<% } %>
+						<!-- _<_%_ and _%_>_ are ejs tags!!! 					 -->
+						<% if(!currentUser){ %>
+							<li><a href="/login">Login</a></li>
+							<li><a href="/register">Sign Up</a></li>
 						
-						<li><a href="/logout">Logout</a></li>
-					<% } %>
+						<% } else { %>
+							<% if(currentUser.isAdmin) { %>
+								<li><a><strong>ADMIN: <%= currentUser.username %></strong></a></li>
+							<% } else { %>
+								<li><a>Logged In as: <strong><%= currentUser.username %></strong></a></li>
+								<% } %>
+							
+							<li><a href="/logout">Logout</a></li>
+						<% } %>
+						
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -81,5 +93,15 @@
 		
 		
 	</div>
+
+	<!-- Adding jQuery   --it has to go before JS addon, because JS relise on jQuery-->
+	<script
+	  src="https://code.jquery.com/jquery-3.4.1.js"
+	  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+	  crossorigin="anonymous"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 	
 	
