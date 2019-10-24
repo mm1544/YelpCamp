@@ -26,7 +26,7 @@ It will add some spacing on the sides-->
 	</header>
 
 	<% if(campgrounds.length < 1) { %>
-		<h1 class="text-center">No results found!</h1>
+		<h1 class="text-center"><em>No results found!</em></h1>
 	<%}%>
 
 	
@@ -38,7 +38,7 @@ It will add some spacing on the sides-->
 
 		<% campgrounds.forEach(function(campground){ %>
 
-			<div class="col-md-3 col-sm-6">
+			<div class="col-md-3 col-sm-6 col-xs-12">
 				<!-- There are 12 units. For screen size medium?? we divide screen into 4 chunks, where each chunk takes 3 units. For small, each item takes 6 units...	Extra small !default is to use 12 units for 1 item.			 -->
 				<!-- class="thumbnail", is bootstrap class that helps to make a little card or grid item				 -->
 				<div class="thumbnail">
