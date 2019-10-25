@@ -3,77 +3,66 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<!-- Make site responsive on mobile/tablet -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>YelpCamp</title>
 	
-<!-- Bootstrap v3.4.1	 -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-	
+	<!-- Bootstrap v3.3.7	 -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!--Linking our custom stylesheet 	 -->
 	<link rel="stylesheet" href="/stylesheets/main.css">
 	
 </head>
 <body>
 	
-	<!-- Nav bar. All the files, that will include !header, will have a navbar-->
-	
 	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-					<!--Making a "hamburger" -->
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-nav-demo" aria-expanded="false">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
 					</button>
-
-				<a class="navbar-brand" href="/">YelpCamp</a>
-			</div>
-			
-			
-			<div class="collapse navbar-collapse" id="bs-nav-demo" >
-				<ul class="nav navbar-nav navbar-right">
-					<li>
-						<p>
-							 <!---- after submitting, iputs will be put into query, 
-								and that will allow us to access input values ---->
-
-							<form action="/campgrounds" method="GET" class="form-inline">
+		
+					<a class="navbar-brand" href="/">YelpCamp</a>
+				</div>
+				<div id="navbar" class="collapse navbar-collapse">
+					<ul class="nav navbar-nav">
+					<li class="<%= typeof page !== 'undefined' && page === 'campgrounds' ? 'active' : '' %>"><a href="/campgrounds">Home</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<ul class="nav navbar-nav" id="form">
 								<div class="container-fluid">
-									<div class="container-fluid">
+									<form action="/campgrounds" method="GET" class="form-inline">
 										<div class="form-group">
+											<div class="container-fluid">
 												<input type="text" name="search" placeholder="Search for campgrounds..." class="form-control">
-											
 												<input type="submit" value="Search" class="btn btn-default">
+											</div>
 										</div>
-									</div>
+									</form>
 								</div>
-							</form> 
-						</p> 
-					</li>
-					<li role="separator" class="divider"></li>
-					<li>
-					
-						<!-- _<_%_ and _%_>_ are ejs tags!!! 					 -->
+							</ul>
+						</li>
 						<% if(!currentUser){ %>
-							<li><a href="/login">Login</a></li>
-							<li><a href="/register">Sign Up</a></li>
-						
+							<li class="<%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>"><a href="/login">Login</a></li>
+							<li class="<%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>"><a href="/register">Sign Up</a></li>
 						<% } else { %>
 							<% if(currentUser.isAdmin) { %>
 								<li><a><strong>ADMIN: <%= currentUser.username %></strong></a></li>
 							<% } else { %>
-								<li><a>Logged In as: <strong><%= currentUser.username %></strong></a></li>
-								<% } %>
+								<li><a href="#">Signed In As <%= currentUser.username %></a></li>
+							<% } %>
 							
 							<li><a href="/logout">Logout</a></li>
 						<% } %>
-						
-					</li>
-				</ul>
+					</ul>
+				</div>
 			</div>
-		</div>
-	</nav>
+		</nav>
+	
 	
 	<div class="container">
 		<!--even there is nothing in error, it can be empty array... 		 -->
@@ -89,19 +78,8 @@
 			<%= success %>
 		</div>
 		<% } %>
-		
-		
-		
 	</div>
 
-	<!-- Adding jQuery   --it has to go before JS addon, because JS relise on jQuery-->
-	<script
-	  src="https://code.jquery.com/jquery-3.4.1.js"
-	  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-	  crossorigin="anonymous"></script>
-
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+	<div class="container">
 	
 	

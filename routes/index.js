@@ -21,7 +21,7 @@ router.get("/", function(req, res){
 
 // Show register form
 router.get("/register", function(req, res){
-	res.render("register");
+	res.render("register", {page: 'register'});
 });
 
 // Handle sign-up logic
@@ -41,9 +41,8 @@ router.post("/register", function(req, res){
 	User.register(newUser, req.body.password, function(err, user){
 // 		"user" is a newly created user
 		if(err){
-			req.flash("error", err.message);
-			// console.log(err);
-			res.render("register");
+			console.log(err);
+			res.render("register", {error: err.message});
 		}
 		// LOGGING-IN. Once user has signed-up it will
 		// log-him-in
@@ -58,7 +57,7 @@ router.post("/register", function(req, res){
 
 // Shows login form
 router.get("/login", function(req, res){
-	res.render("login");
+	res.render("login", {page:'login'});
 });
 
 

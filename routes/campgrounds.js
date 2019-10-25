@@ -18,7 +18,7 @@ var options = {
  
 var geocoder = NodeGeocoder(options);
 
-// INDEX - will show all the camp-grounds that we have
+// INDEX - will show all the campgrounds that we have
 router.get("/", function(req, res){
 	if(req.query.search){
 		// Will search through all the campgrounds and will return
@@ -49,7 +49,7 @@ router.get("/", function(req, res){
 				// CURRENTLY LOGGED USER!!!! So we are
 				// !passing! info about the user to the
 				// templet 			
-				res.render("campgrounds/index", {campgrounds: campgroundsFromDB});
+				res.render("campgrounds/index", {campgrounds: campgroundsFromDB, page: 'campgrounds'});
 			}
 		});
 	}

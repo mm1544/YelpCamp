@@ -20,3 +20,8 @@
     height: 400px;
     width: 100%;
 }
+
+#form {
+	/* 1vh = 1% or 1/100th of viewport height */
+	margin-top: 1vh;
+}
