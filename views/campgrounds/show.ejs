@@ -34,7 +34,7 @@
 						<%= campground.description %>
 					</p>
 					<p>
-						<em>Submitted By <a href="/users/<%=campground.author.id%>"></em><%=campground.author.username %></a>
+						<em>Submitted By <a href="/users/<%=campground.author.id%>"><%=campground.author.username %></a> <%= moment(campground.createdAt).fromNow() %></em>
 					</p>
 					
 <!-- "currentUser && ..." ==> if current user exist && ...
@@ -69,7 +69,7 @@ of them we need to mke a separate row.  -->
 				<div class="row">
 					<div class="col-md-12">
 						<strong><%= comment.author.username %></strong>
-						<span class="pull-right">10 days ago</span>
+						<span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
 						<p>
 							<%= comment.text %>
 						</p>

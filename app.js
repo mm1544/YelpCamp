@@ -16,6 +16,7 @@ var express = require("express"),
 	Campground = require("./models/campground"),
 	User = require("./models/user"),
 	seedDB = require("./seeds");
+	newMoment = require('moment');
 
 var commentRoutes 		= require("./routes/comments"),
 	campgroundRoutes 	= require("./routes/campgrounds"),
@@ -63,7 +64,7 @@ app.use(flash()); // messages will be displayed in the header file(header.ejs)
 // });
 
 
-// coonecting to the database:
+// connecting to the database:
 mongoose.connect(url, {
 	useNewUrlParser: true,
 	//useCreateIndex: true,
@@ -74,6 +75,8 @@ mongoose.connect(url, {
     console.log('Error: ', err.message);
 });
 
+// *Now moment is available for use in all of your view files via the variable named moment
+app.locals.moment = newMoment;
 
 // PASSPORT CONFIGURATION
 var MongoStore = require('connect-mongo')(express_session);
