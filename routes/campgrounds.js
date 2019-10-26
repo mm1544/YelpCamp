@@ -7,6 +7,34 @@ var Campground = require("../models/campground");
 // if we "require" a directory(not a file) it will outomaticaly look for "index.js"
 var middleware = require("../middleware");
 var NodeGeocoder = require('node-geocoder');
+
+// var request = require("request");
+var multer = require('multer');
+var storage = multer.diskStorage({
+  filename: function(req, file, callback) {
+	//   whenever the file gets uploaded, we are creating
+	//  custom name for that file. Name will contain: current time stamp plus
+	//  the original file name
+    callback(null, Date.now() + file.originalname);
+  }
+});
+var imageFilter = function (req, file, cb) {
+    // accept image files only
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+        return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
+};
+var upload = multer({ storage: storage, fileFilter: imageFilter})
+
+var cloudinary = require('cloudinary');
+cloudinary.config({ 
+  cloud_name: 'dxnvvhvaj', 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+
  
 var options = {
   provider: 'google',
@@ -57,51 +85,62 @@ router.get("/", function(req, res){
 
 
 // CREATE - add a new campground to DB
-router.post("/", middleware.isLoggedIn, function(req, res){
+router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, res){
+	// 'image' is upladed by user; it comes from new.ejs, name='image'
 	
-	// 	get dara from form (with req.body.*) and add to campgrounds array ("push" a new campground to array)
-	var name = req.body.name;
-	var price = req.body.price;
-	var image = req.body.image
-	var description = req.body.description;
-	
-	var author = {
-		username: req.user.username, 
-		id: req.user._id};
+	// 'req.file' is comming from 'multer' it is a ?file name?
+	cloudinary.uploader.upload(req.file.path, function(result) {
 
-	// Accesses API and gets Data (coordinates) or Error
-	geocoder.geocode(req.body.location, function (err, data){
-		if(err || !data.length) { // err or no data
-			console.log(err);
-			req.flash('error', 'Invalid address');
-			return res.redirect('back');
+		//add cloudinary url for the image to the 
+		// campground object under the image property
+		req.body.campground.image = result.secure_url;
+
+		//adding the author to campground
+		req.body.campground.author = {
+			id: req.user._id,
+			username: req.user.username
 		}
-
-		var lat = data[0].latitude;
-		var lng = data[0].longitude;
-		var location = data[0].formattedAddress;
+	// });
 
 
-		// need to push an object therefore making new object
-		var newCampground = {name: name, price: price, image: image, description: description, author: author, location: location, lat: lat, lng: lng};
-	
-		// 	"req.user" contains info about currently logged-in user (where from???. Passport maybe loggs-in the user and adds this info).
-		// console.log(req.user);
-		
-		// Saving to DB
-		Campground.create(newCampground,
-		function(err, newlyCreated){
-		if(err){
-			req.flash("error", err.message);
-			console.log(err);
-		} else {
-			req.flash("success", "Campground created");
-			// console.log(newlyCreated);
-				// 	!redirect! back to campgrounds page (to route 
-				// "router.get("/campgrounds"...")
-			res.redirect("/campgrounds"); //!!!by default it is redirected as a !GET request!
+		// Accesses API and gets Data (coordinates) or Error
+		geocoder.geocode(req.body.campground.location, function (err, data){
+			if(err || !data.length) { // err or no data
+				console.log(err);
+				req.flash('error', 'Invalid address');
+				return res.redirect('back');
 			}
+
+			// var lat = data[0].latitude;
+			// var lng = data[0].longitude;
+			// var location = data[0].formattedAddress;
+
+
+			// need to push an object therefore making new object
+			// var newCampground = {name: name, price: price, image: image, description: description, author: author, location: location, lat: lat, lng: lng};
+		
+			// adding latitude
+			req.body.campground.lat = data[0].latitude;
+			// ... longitude
+			req.body.campground.lng = data[0].longitude;
+			// ... formated address
+			req.body.campground.location = data[0].formattedAddress;
+			
+			// 	"req.user" contains info about currently logged-in user (where from???. Passport maybe loggs-in the user and adds this info).
+			
+			// Saving to DB
+			Campground.create(req.body.campground,
+			function(err, newlyCreated){
+			if(err){
+				req.flash("error", err.message);
+				return res.redirect('back');
+			}
+			req.flash("success", "Campground created");
+			res.redirect("/campgrounds/" + newlyCreated.id); //!!!by default it is redirected as a !GET request
+			
+			});
 		});
+
 	});
 });
 

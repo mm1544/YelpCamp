@@ -14,25 +14,28 @@
 			
 		
 
-			<form action="/campgrounds" method="POST">
+			<form action="/campgrounds" method="POST" enctype="multipart/form-data">
 				<!-- bootstrap class: class="form-control"	 -->
 				<div class="form-group"> <!-- for a spacing between elements -->
 					
-					<input class="form-control" type="text" name="name" placeholder="name">
-					
+					<input class="form-control" type="text" name="campground[name]" placeholder="name">
 				</div>
 				<div class="form-group">
-					<input class="form-control" type="text" name="image" placeholder="image url">
+					<label for="image">Image</label>
+					<input type="file" id="image" name="image" accept="image/*" required>
 				</div>
 				<div class="form-group">
-					<input class="form-control" type="text" name="description" placeholder="description">
+					<input class="form-control" type="text" name="campground[image]" placeholder="image url">
+				</div>
+				<div class="form-group">
+					<input class="form-control" type="text" name="campground[description]" placeholder="description">
 				</div>
 				<div class="form-group"> <!-- for a spacing between elements -->
-					<input class="form-control" type="number" name="price" placeholder="price" min="1" step="1">
+					<input class="form-control" type="number" name="campground[price]" placeholder="price" min="1" step="1">
 				</div>
 				<div class="form-group">
 					<label for="location">Location</label>
-					<input class="form-control" type="text" name="location" id="location" placeholder="Yosemite National Park, CA">
+					<input class="form-control" type="text" name="campground[location]" id="location" placeholder="Yosemite National Park, CA">
 				</div>
 				
 				
